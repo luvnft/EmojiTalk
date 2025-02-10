@@ -7,7 +7,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 // import router from "./routes/testRoute.js";
 import userRouter from "./routes/userRoute.js";
-import router from "./routes/testroute.js";
+import router from "./routes/testRoute.js";
 import chatRouter from "./routes/chatRoute.js";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
@@ -33,7 +33,7 @@ const openai = new OpenAI({
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: process.env.FRONTEND_URL,
     methods: ["GET", "POST"],
   },
 });
