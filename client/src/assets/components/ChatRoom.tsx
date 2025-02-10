@@ -364,7 +364,7 @@ function Intro() {
     <>
       <div className="chatRoom">
         <div className="title">
-          <div className="titleTop">Emoji Talk</div>
+          <div className="titleTop">Emoji</div>
 
           {/* <div className="onlineNumber"> */}
           <div className="userCount">
@@ -408,7 +408,8 @@ function Intro() {
           onTouchEnd={() => {
             setwide("");
             setHide("hide");
-          }}>
+          }}
+        >
           <div className={`infoText ${hide}`}>
             is a Project investigates beyond our emoji keyboards Today,
             communication extends beyond spoken and written language to include
@@ -425,7 +426,8 @@ function Intro() {
           className="messageContainer"
           style={{
             backfaceVisibility: "hidden",
-          }}>
+          }}
+        >
           <div className="messageContainerInside">
             {messages &&
               messages.map((item, index) => (
@@ -441,7 +443,8 @@ function Intro() {
                     position: "relative",
                     display: "flex",
                     flexDirection: "column",
-                  }}>
+                  }}
+                >
                   <motion.div
                     initial={{ y: 200, scale: 0.5 }}
                     animate={{
@@ -452,7 +455,8 @@ function Intro() {
                         ease: "easeInOut", // 부드러운 애니메이션
                       },
                     }}
-                    className="message">
+                    className="message"
+                  >
                     <motion.div
                       initial={{ opacity: 1, visibility: "visible" }}
                       animate={{ opacity: 1, visibility: "visible" }}
@@ -461,7 +465,8 @@ function Intro() {
                       }}
                       style={{
                         fontSize: "20px",
-                      }}>
+                      }}
+                    >
                       {" "}
                       <p className=" userName">{item.userName}</p>{" "}
                       {(messageStates as any)[item._id] ? (
@@ -478,7 +483,8 @@ function Intro() {
                                 item.colorCode
                               )}, 0.8)`,
                               color: "black",
-                            }}>
+                            }}
+                          >
                             {item.message}
                           </motion.p>
                         </AnimatePresence>
@@ -494,7 +500,8 @@ function Intro() {
                             backgroundColor: `rgba(${hexToRgb(
                               item.colorCode
                             )}, 0.8)`,
-                          }}>
+                          }}
+                        >
                           {item.emoji}
                         </motion.p>
                       )}
@@ -525,16 +532,15 @@ function Intro() {
           onSubmit={(event) => {
             event?.preventDefault();
             sendMessage();
-          }}>
+          }}
+        >
           <input
             type="text"
             onClick={showModal}
             onChange={handleChangeMessage}
             value={messageValue}
           />
-          <button
-            className="sendBtn"
-            type="submit">
+          <button className="sendBtn" type="submit">
             <FaArrowUp style={{ color: "white" }} />
           </button>
         </form>
@@ -572,9 +578,7 @@ function Intro() {
                   onChange={handleInputValue}
                   onClick={clickModalInput}
                 />
-                <button
-                  className="modalBtn"
-                  onClick={createNewUser}>
+                <button className="modalBtn" onClick={createNewUser}>
                   OK
                   {/* <FaArrowRightLong style={{ color: "#f2e1e177" }} /> */}
                 </button>
