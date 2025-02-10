@@ -42,13 +42,9 @@ jobs:
         run: |
           cd client
           npm run build
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Save frontend to deploy branch 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          # Upload dist folder
-          path: client/dist
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          branch: gh-pages # The branch the action should deploy to.
+          folder: client/dist # The folder the action should deploy.
+          clean: true
