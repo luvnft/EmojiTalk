@@ -141,7 +141,7 @@ function Intro() {
   const getAllmesssages = async () => {
     try {
       const response = await fetch(
-        "http://localhost:3001/api/chat/getAllChats"
+        import.meta.env.VITE_WEBSOCKET + "/api/chat/getAllChats"
       );
 
       if (response.ok) {
@@ -170,7 +170,7 @@ function Intro() {
 
   useEffect(() => {
     if (!socketRef.current) {
-      socketRef.current = io("http://localhost:3001");
+      socketRef.current = io(import.meta.env.VITE_WEBSOCKET);
     }
 
     const socket = socketRef.current;
@@ -225,7 +225,7 @@ function Intro() {
 
     try {
       const response = await fetch(
-        "http://localhost:3001/api/user/newUser",
+        import.meta.env.VITE_WEBSOCKET + "/api/user/newUser",
         requestOptions
       );
 
@@ -285,7 +285,7 @@ function Intro() {
 
     try {
       const response = await fetch(
-        "http://localhost:3001/api/chat/newChat",
+        import.meta.env.VITE_WEBSOCKET + "/api/chat/newChat",
         requestOptions
       );
 
