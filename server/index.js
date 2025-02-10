@@ -13,6 +13,7 @@ import { createServer } from "node:http";
 import { Server } from "socket.io";
 import session from "express-session";
 import OpenAI from "openai";
+import messageModel from "./models/chatModel.js";
 
 dotenv.config();
 const app = express();
@@ -44,17 +45,6 @@ io.on("connection", (socket) => {
   userCount++; // 접속자 수 증가
   console.log(`총 접속자 수: ${userCount}`);
 
-  if (userCount === 1) {
-    const botMessage = {
-      sender: "AI Bot",
-      message:
-        "안녕하세요! 저는 AI 챗봇입니다. 질문이 있다면 언제든지 물어보세요.",
-    };
-
-    // 모든 클라이언트에게 봇 메시지 전송
-    io.emit("showNewMessage", botMessage);
-  }
-
   io.emit("userCount", userCount);
 
   socket.on("joinRoom", (roomName) => {
@@ -72,20 +62,36 @@ io.on("connection", (socket) => {
     const { roomName, message } = data;
     console.log(`Message received in room ${roomName}:`, data);
 
-    // 메시지를 해당 방에 있는 모든 사용자에게 전송
     io.to(roomName).emit("showNewMessage", data);
 
     if (userCount === 1) {
       const botResponse = await getBotResponse(message); // OpenAI 응답 호출
+      const emojiResponse = await getEmojiResponse(botResponse);
+
       const botMessage = {
         userName: "AI Bot",
         message: botResponse,
-        emoji: botResponse,
+        emoji: emojiResponse,
+        colorCode: "#b9bab8",
         roomName: "globalRoom",
       };
+
+      const newMessageBot = {
+        userId: "67a9081404928d370c72c1aa",
+        userName: "AI Bot",
+        message: botResponse,
+        emoji: emojiResponse,
+        colorCode: "#b9bab8",
+      };
+
+      const newChat = new messageModel(newMessageBot);
+      await newChat.save();
+
       console.log("botMessage", botMessage);
 
-      io.to(roomName).emit("showNewMessage", botMessage);
+      setTimeout(() => {
+        io.to(roomName).emit("showNewMessage", botMessage);
+      }, 1000);
     }
   });
 
@@ -100,12 +106,19 @@ io.on("connection", (socket) => {
 
 async function getBotResponse(userMessage) {
   console.log("running getBotResponse");
+
   try {
+    const systemMessage = {
+      role: "system",
+      content:
+        "너는 친근하고 자연스러운 말투로 대화하는 챗봇이야. 너무 기계적인 말투는 피하고, 인간처럼 대화해줘.",
+    };
+
     const response = await openai.chat.completions.create({
       model: "gpt-3.5-turbo", // OpenAI 모델
-      messages: [{ role: "user", content: userMessage }],
-      max_tokens: 50, // 더 짧은 답변
-      temperature: 0.3, // 낮은 값으로 설정
+      messages: [systemMessage, { role: "user", content: userMessage }],
+      max_tokens: 150,
+      temperature: 0.3,
     });
 
     return response.choices[0].message.content; // OpenAI 응답 텍스트 반환
@@ -113,6 +126,24 @@ async function getBotResponse(userMessage) {
     console.error("Error while fetching bot response:", error);
     return "죄송합니다, 요청을 처리할 수 없습니다.";
   }
+}
+
+async function getEmojiResponse(userMessage) {
+  const userPrompt = `Translate the following phrase into emojis only. Make sure the translation captures the exact meaning of the original phrase as closely as possible. At the same time, reflect the cultural and regional context of the language by incorporating culturally unique elements where appropriate. The result should only use emojis and be easy to understand. Here is the phrase: "${userMessage}”`;
+  const response = await openai.chat.completions.create({
+    model: "gpt-4",
+    // model: "gpt-3.5-turbo",
+    messages: [
+      {
+        role: "user",
+        content: userPrompt,
+      },
+    ],
+    max_tokens: 150,
+    temperature: 0.9,
+  });
+  const emoji = response.choices[0].message.content;
+  return emoji;
 }
 
 const startServer = () => {

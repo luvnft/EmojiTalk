@@ -4,10 +4,11 @@ const { Schema } = mongoose;
 
 const messageSchema = new Schema(
   {
-    userId: { type: Schema.Types.ObjectId, ref: "user" },
-    userName: { type: String, date: Date },
-    message: { type: String, date: Date },
-    emoji: { type: String, date: Date },
+    userId: { type: Schema.Types.ObjectId, required: true, ref: "user" },
+    userName: { type: String, required: true, date: Date },
+    message: { type: String, required: true, date: Date },
+    emoji: { type: String, required: true, date: Date },
+    colorCode: { type: String, required: true },
   },
   { timestamps: true }
 );

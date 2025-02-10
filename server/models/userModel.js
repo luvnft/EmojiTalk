@@ -5,6 +5,7 @@ const { Schema } = mongoose;
 const userSchema = new Schema(
   {
     userName: { type: String, required: true, unique: true },
+    colorCode: { type: String, required: true },
     chat: [
       { type: Schema.Types.ObjectId, ref: "message", date: Date }, // comments 참조
       ,

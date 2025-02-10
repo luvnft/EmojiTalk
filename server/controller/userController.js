@@ -30,7 +30,7 @@ const createNewUser = async (req, res) => {
     });
 
     if (exsistingUser) {
-      res.status(500).json({ error: "userName already registered" });
+      res.status(500).json({ error: "Username is already in use" });
       return;
     } else {
       const newUser = new userModel(req.body);

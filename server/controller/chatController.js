@@ -14,13 +14,18 @@ const translate = async (req, res) => {
   const text = req.body.userPrompt;
   const userName = req.body.userName;
   const userId = req.body.userId;
+  const colorCode = req.body.colorCode;
   // const userPrompt = `Translate the phrase ${text}, just use emojis`;
 
-  const userPrompt = `Translate the phrase into emojis: ${text}, just use emojis`;
+  // const userPrompt = `Translate the phrase into emojis: ${text}, just use emojis`;
+  // const userPrompt = `Translate the following phrase into emojis only. Consider the cultural context of the language and make sure the translation is as understandable as possible using emojis. Do not use any text, only emojis. Here is the phrase: "${text}"`;
 
+  // const userPrompt = `Translate the following phrase into emojis only. Ensure the translation reflects the cultural and regional context of the language, incorporating elements unique to the culture where the phrase originates. Make the translation as understandable as possible while using emojis. Do not include any text. Here is the phrase: "${text}"`;
+  const userPrompt = ` Translate the following phrase into emojis only. The emojis should clearly represent the meaning of the phrase as closely as possible, including any implied context. For example, if the phrase is asking if something is working or functioning, use emojis that represent functionality or operation. Do not include any text. Phrase: "${text}”`;
   try {
+    // const userPrompt = `Translate the following phrase into emojis only. Make sure the translation captures the exact meaning of the original phrase as closely as possible. At the same time, reflect the cultural and regional context of the language by incorporating culturally unique elements where appropriate. The result should only use emojis and be easy to understand. Here is the phrase: "${text}”`;
     const response = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: "gpt-4",
       // model: "gpt-3.5-turbo",
       messages: [
         {
@@ -29,7 +34,7 @@ const translate = async (req, res) => {
         },
       ],
       max_tokens: 150,
-      temperature: 0.2,
+      temperature: 0.9,
     });
 
     console.log(response.choices[0].message.content);
@@ -41,11 +46,11 @@ const translate = async (req, res) => {
       userId: userId,
       message: text,
       emoji: emoji,
+      colorCode: colorCode,
     };
 
     const newChat = new messageModel(newChatMessage);
     await newChat.save();
-    console.log(newChat._id);
 
     const user = await userModel
       .findByIdAndUpdate(
