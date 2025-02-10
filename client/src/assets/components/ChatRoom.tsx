@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { Socket, io } from "socket.io-client";
-import { AnimatePresence, AnimationType, motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { FaArrowUp } from "react-icons/fa6";
 import { v4 as uuidv4 } from "uuid";
 
-import e from "express";
-import { div } from "motion/react-client";
+// import e from "express";
+// import { div } from "motion/react-client";
 
 export type NotOKType = {
   error: string;
@@ -35,24 +35,24 @@ type User = {
   _id: string;
 };
 
-type errorMessage = {
-  error: string;
-};
+// type errorMessage = {
+//   error: string;
+// };
 
 function Intro() {
-  let navigate = useNavigate();
+  // let navigate = useNavigate();
   const socketRef = useRef<Socket | null>(null); // 소켓 객체를 useRef로 관리
   const [userCount, setUserCount] = useState<number>(0);
   const [modalSwitch, setModalSwitch] = useState(false);
   const [valueInput, setValueInput] = useState<any>("Max.8 words");
   const [colorValue, setColorValue] = useState("#afff59");
   const [messageValue, setMessageValue] = useState<any>("");
-  const [newMessage, setNewMessage] = useState<MessageOkResponse | null>(null);
+  const [, setNewMessage] = useState<MessageOkResponse | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [wide, setwide] = useState("");
   const [hide, setHide] = useState("hide");
-  const [loggedIn, setLoggedIn] = useState(true);
+  // const [loggedIn, setLoggedIn] = useState(true);
   const [isExist, setIsExist] = useState(true);
 
   // const [showMotion, setShowMotion] = useState(false);
@@ -350,15 +350,15 @@ function Intro() {
     console.log("colorvalue", colorValue);
   };
 
-  const messageEndRef = useRef(null);
+  const messageEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]); // messages가 변경될 때마다 자동으로 스크롤
 
-  const scrollToBottom = () => {
-    messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  // const scrollToBottom = () => {
+  //   messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  // };
 
   return (
     <>
@@ -408,8 +408,7 @@ function Intro() {
           onTouchEnd={() => {
             setwide("");
             setHide("hide");
-          }}
-        >
+          }}>
           <div className={`infoText ${hide}`}>
             is a Project investigates beyond our emoji keyboards Today,
             communication extends beyond spoken and written language to include
@@ -426,8 +425,7 @@ function Intro() {
           className="messageContainer"
           style={{
             backfaceVisibility: "hidden",
-          }}
-        >
+          }}>
           <div className="messageContainerInside">
             {messages &&
               messages.map((item, index) => (
@@ -443,8 +441,7 @@ function Intro() {
                     position: "relative",
                     display: "flex",
                     flexDirection: "column",
-                  }}
-                >
+                  }}>
                   <motion.div
                     initial={{ y: 200, scale: 0.5 }}
                     animate={{
@@ -455,8 +452,7 @@ function Intro() {
                         ease: "easeInOut", // 부드러운 애니메이션
                       },
                     }}
-                    className="message"
-                  >
+                    className="message">
                     <motion.div
                       initial={{ opacity: 1, visibility: "visible" }}
                       animate={{ opacity: 1, visibility: "visible" }}
@@ -465,11 +461,10 @@ function Intro() {
                       }}
                       style={{
                         fontSize: "20px",
-                      }}
-                    >
+                      }}>
                       {" "}
                       <p className=" userName">{item.userName}</p>{" "}
-                      {messageStates[item._id] ? (
+                      {(messageStates as any)[item._id] ? (
                         <AnimatePresence mode="wait">
                           <motion.p
                             initial={{ opacity: 1 }}
@@ -483,8 +478,7 @@ function Intro() {
                                 item.colorCode
                               )}, 0.8)`,
                               color: "black",
-                            }}
-                          >
+                            }}>
                             {item.message}
                           </motion.p>
                         </AnimatePresence>
@@ -500,8 +494,7 @@ function Intro() {
                             backgroundColor: `rgba(${hexToRgb(
                               item.colorCode
                             )}, 0.8)`,
-                          }}
-                        >
+                          }}>
                           {item.emoji}
                         </motion.p>
                       )}
@@ -527,7 +520,12 @@ function Intro() {
             <div ref={messageEndRef} />
           </div>
         </div>
-        <div className="chatBottom">
+        <form
+          className="chatBottom"
+          onSubmit={(event) => {
+            event?.preventDefault();
+            sendMessage();
+          }}>
           <input
             type="text"
             onClick={showModal}
@@ -536,13 +534,10 @@ function Intro() {
           />
           <button
             className="sendBtn"
-            onClick={() => {
-              sendMessage();
-            }}
-          >
+            type="submit">
             <FaArrowUp style={{ color: "white" }} />
           </button>
-        </div>
+        </form>
       </div>
 
       <AnimatePresence>
@@ -577,7 +572,9 @@ function Intro() {
                   onChange={handleInputValue}
                   onClick={clickModalInput}
                 />
-                <button className="modalBtn" onClick={createNewUser}>
+                <button
+                  className="modalBtn"
+                  onClick={createNewUser}>
                   OK
                   {/* <FaArrowRightLong style={{ color: "#f2e1e177" }} /> */}
                 </button>
