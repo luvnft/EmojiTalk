@@ -170,7 +170,7 @@ function Intro() {
 
   useEffect(() => {
     if (!socketRef.current) {
-      socketRef.current = io(import.meta.env.VITE_WEBSOCKET);
+      socketRef.current = io(import.meta.env.VITE_WEBSOCKET, { secure: true });
     }
 
     const socket = socketRef.current;
