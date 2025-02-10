@@ -1,8 +1,8 @@
 import { motion } from "motion/react";
-import { tr } from "motion/react-client";
-import { auto } from "openai/_shims/registry.mjs";
+// import { tr } from "motion/react-client";
+// import { auto } from "openai/_shims/registry.mjs";
 
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function InfoText() {
   const [hide, setHide] = useState<string>("");
@@ -60,8 +60,7 @@ function InfoText() {
       style={{
         overflowY: "auto",
         maxHeight: "100vh",
-      }}
-    >
+      }}>
       <div className="info-text info-chat">
         {/* <div className={`loading-container `}> */}
         <div className={`loading-container ${hide}`}>
@@ -80,9 +79,10 @@ function InfoText() {
             <motion.div
               initial={{ transform: "translateY(40px)" }}
               animate={{ transform: "translateY(0px)" }}
-              transition={{ type: "bounce" }}
-            >
-              <div className="yours messages" id="large">
+              transition={{ type: "bounce" }}>
+              <div
+                className="yours messages"
+                id="large">
                 <div className="message last ">Emoji Talk</div>
               </div>
             </motion.div>
@@ -98,8 +98,7 @@ function InfoText() {
                 duration: 0.4, // 애니메이션 지속 시간 (1초)
                 ease: "easeOut", // 애니메이션 가속도
                 delay: delaySec,
-              }}
-            >
+              }}>
               <div className="mine messages">
                 <div className="message ">
                   Today, communication extends beyond spoken and written
@@ -121,8 +120,7 @@ function InfoText() {
                 duration: 0.4, // 애니메이션 지속 시간 (1초)
                 ease: "easeOut", // 애니메이션 가속도
                 delay: delaySec * 2,
-              }}
-            >
+              }}>
               <div className="mine messages">
                 <div className="message ">
                   Emojis allow us to send a digital hug{" "}
@@ -142,8 +140,7 @@ function InfoText() {
                 duration: 0.4, // 애니메이션 지속 시간 (1초)
                 ease: "easeOut", // 애니메이션 가속도
                 delay: delaySec * 3,
-              }}
-            >
+              }}>
               <div className="mine messages">
                 <div className="message ">
                   show support <span className="filter-orange"></span>
@@ -162,8 +159,7 @@ function InfoText() {
                 duration: 0.4, // 애니메이션 지속 시간 (1초)
                 ease: "easeOut", // 애니메이션 가속도
                 delay: delaySec * 4,
-              }}
-            >
+              }}>
               <div className="mine messages">
                 <div className="message last">
                   or convey emotions in a way that is immediate and accessible.{" "}
@@ -182,8 +178,7 @@ function InfoText() {
                 duration: 0.4, // 애니메이션 지속 시간 (1초)
                 ease: "easeOut", // 애니메이션 가속도
                 delay: delaySec * 5,
-              }}
-            >
+              }}>
               <div className="mine messages">
                 <span id="face-emoji">
                   <span id="face"></span>
@@ -191,14 +186,12 @@ function InfoText() {
                     id="left-eye"
                     style={{
                       transform: `translate(${leftEyePosition.x}px, ${leftEyePosition.y}px)`, // 위치 이동
-                    }}
-                  ></span>
+                    }}></span>
                   <span
                     id="right-eye"
                     style={{
                       transform: `translate(${rightEyeRotation.rightY}px, ${rightEyeRotation.rightX}px)`, // 위치 이동
-                    }}
-                  ></span>
+                    }}></span>
                 </span>
               </div>
             </motion.div>
@@ -214,8 +207,7 @@ function InfoText() {
                 duration: 0.4, // 애니메이션 지속 시간 (1초)
                 ease: "easeOut", // 애니메이션 가속도
                 delay: delaySec * 6, // 각 메시지마다 0.5초씩 지연
-              }}
-            >
+              }}>
               <div className="yours messages">
                 <div className="message last">
                   Who decides which emojis are added?
@@ -234,8 +226,7 @@ function InfoText() {
                 duration: 0.4, // 애니메이션 지속 시간 (1초)
                 ease: "easeOut", // 애니메이션 가속도
                 delay: delaySec * 7, // 각 메시지마다 0.5초씩 지연
-              }}
-            >
+              }}>
               <div className="mine messages">
                 <div className="message ">
                   Each year, no more than about 60 new emojis are added to our
@@ -257,8 +248,7 @@ function InfoText() {
                 duration: 0.4, // 애니메이션 지속 시간 (1초)
                 ease: "easeOut", // 애니메이션 가속도
                 delay: delaySec * 8, // 각 메시지마다 0.5초씩 지연
-              }}
-            >
+              }}>
               <div className="mine messages">
                 <div className="message ">
                   Can emojis transcend cultural and generational barriers to
@@ -278,8 +268,7 @@ function InfoText() {
                 duration: 0.4, // 애니메이션 지속 시간 (1초)
                 ease: "easeOut", // 애니메이션 가속도
                 delay: delaySec * 9, // 각 메시지마다 0.5초씩 지연
-              }}
-            >
+              }}>
               <div className="mine messages">
                 <div className="message ">
                   This project will investigate the governance and broader
@@ -300,8 +289,7 @@ function InfoText() {
                 duration: 0.4, // 애니메이션 지속 시간 (1초)
                 ease: "easeOut", // 애니메이션 가속도
                 delay: delaySec * 10, // 각 메시지마다 0.5초씩 지연
-              }}
-            >
+              }}>
               <div className="mine messages">
                 <div className="message last">
                   1. Decision-Making and Authority. Who holds the authority to
@@ -324,8 +312,7 @@ function InfoText() {
                 duration: 0.4, // 애니메이션 지속 시간 (1초)
                 ease: "easeOut", // 애니메이션 가속도
                 delay: delaySec * 11, // 각 메시지마다 0.5초씩 지연
-              }}
-            >
+              }}>
               <div className="yours messages">
                 <div className="message last">
                   1. Decision-Making and Authority. Who holds the authority to
