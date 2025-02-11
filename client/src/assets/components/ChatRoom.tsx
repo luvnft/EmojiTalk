@@ -27,6 +27,7 @@ type Message = {
   userName: any;
   colorCode: string;
   _id: string;
+  updatedAt: string;
 };
 
 type User = {
@@ -58,6 +59,14 @@ function Intro() {
   // const [showMotion, setShowMotion] = useState(false);
 
   const [messageStates, setMessageStates] = useState({});
+
+  const formatLocalTime = (isoString: string) => {
+    const date = new Date(isoString);
+    const hours = date.getHours().toString().padStart(2, "0"); // 2자리로 만들기
+    const minutes = date.getMinutes().toString().padStart(2, "0"); // 2자리로 만들기
+    const time = `${hours}:${minutes}`;
+    return time;
+  };
 
   useEffect(() => {
     if (messages.length === 0) return;
@@ -364,15 +373,19 @@ function Intro() {
     <>
       <div className="chatRoom">
         <div className="title">
-          <div className="titleTop">Emoji</div>
+          <div className="titleTop">Emoji Talk</div>
 
           {/* <div className="onlineNumber"> */}
           <div className="userCount">
-            <span className="onlineIcon"></span>
-            {userCount}
+            <div className="onlineNumber">
+              {" "}
+              <span className="onlineIcon"></span>
+              {userCount}
+            </div>
+
+            <div className="onlineBox">Online</div>
           </div>
 
-          <div className="onlineBox">Online</div>
           {/* </div> */}
 
           {/* <div className="translate">Hi!{localStorage.getItem("userName")}</div> */}
@@ -466,9 +479,19 @@ function Intro() {
                       style={{
                         fontSize: "20px",
                       }}
+                      className="reverse"
                     >
                       {" "}
-                      <p className=" userName">{item.userName}</p>{" "}
+                      <p
+                        className=" userName"
+                        // style={{
+                        //   backgroundColor: `rgba(${hexToRgb(
+                        //     item.colorCode
+                        //   )}, 0.8)`,
+                        // }}
+                      >
+                        {item.userName}
+                      </p>{" "}
                       {(messageStates as any)[item._id] ? (
                         <AnimatePresence mode="wait">
                           <motion.p
@@ -485,7 +508,7 @@ function Intro() {
                               color: "black",
                             }}
                           >
-                            {item.message}
+                            <span>{item.message}</span>
                           </motion.p>
                         </AnimatePresence>
                       ) : (
@@ -496,32 +519,32 @@ function Intro() {
                             // delay: 0.8,
                             duration: 1,
                           }}
-                          style={{
-                            backgroundColor: `rgba(${hexToRgb(
-                              item.colorCode
-                            )}, 0.8)`,
-                          }}
                         >
-                          {item.emoji}
+                          <span>
+                            <span
+                              style={{
+                                backgroundColor: `rgba(${hexToRgb(
+                                  item.colorCode
+                                )}, 0.8)`,
+                                fontSize: "33px",
+                              }}
+                            >
+                              {item.emoji}
+                            </span>
+                          </span>
+                          <span
+                            style={{
+                              fontSize: "12px",
+                              marginLeft: "2px",
+                              color: "#c9c9c9",
+                            }}
+                          >
+                            {formatLocalTime(item.updatedAt)}
+                          </span>
                         </motion.p>
                       )}
                     </motion.div>
                   </motion.div>
-
-                  {/* <motion.div
-                    initial={{ y: 200, scale: 0.5 }}
-                    animate={{
-                      y: 0,
-                      scale: 1,
-                      transition: {
-                        duration: 0.2, // 전체 애니메이션 시간
-                        ease: "easeInOut", // 부드러운 애니메이션
-                      },
-                    }}
-                    className="message "
-                  >
-                 
-                  </motion.div> */}
                 </div>
               ))}
             <div ref={messageEndRef} />
