@@ -231,7 +231,7 @@ input[type="color"]::-webkit-color-swatch {
   z-index: 9;
   flex-direction: row;
   transition: 0.9s all ease;
-  overflow: hidden;
+  overflow-y: scroll;
 }
 
 .infoText {
@@ -526,7 +526,6 @@ input[type="color"]::-webkit-color-swatch {
 .info-chat {
   display: flex;
   width: 100%;
-
   /* background-color: #eee; */
   flex-direction: column;
   font-family: helvetica;
@@ -581,8 +580,14 @@ input[type="color"]::-webkit-color-swatch {
   max-width: 90vw;
   padding: 0;
   margin: 0;
-  line-height: 1.2;
+  line-height: 1.45;
   text-wrap: balance;
+  margin-top: 1.5vh;
+}
+
+.message > div p:nth-child(2) span:nth-child(1) {
+  padding: 0.7dvh;
+  box-decoration-break: clone;
 }
 
 .message > div {
@@ -591,25 +596,15 @@ input[type="color"]::-webkit-color-swatch {
   display: inline;
 }
 
-/* userName */
-.message > div p:nth-child(1) {
-  /* margin-left: 1vw; */
-}
-
-.message > div p:nth-child(2) {
-  display: inline;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
-  padding: 0.45vh;
-  /* margin-left: 2.5vw; */
-}
-
 .first {
   position: relative;
   width: max-content;
   height: auto;
   right: 0;
-  text-wrap: balance;
+  /* text-wrap: balance; */
+  overflow-wrap: break-word;
+  word-break: normal;
+
   max-width: 90vw;
 }
 
@@ -621,19 +616,26 @@ input[type="color"]::-webkit-color-swatch {
   max-width: 90vw;
 }
 
-.yours .message {
+.mine .message > div {
   align-self: flex-start;
   position: relative;
+  display: flex;
 }
 
-.mine .message div p:nth-child(1) {
-  /* order: 1; */
+.yours .message > div {
+  align-self: flex-start;
+  position: relative;
+  display: flex;
+}
+
+/* .mine .message div p:nth-child(1) {
   padding-right: 2vw;
 }
 
 .mine .message div p:nth-child(2) {
   display: flex;
   flex-direction: row;
+  align-items: flex-end;
 }
 
 .mine .message div p:nth-child(2) span:nth-child(1) {
@@ -654,12 +656,11 @@ input[type="color"]::-webkit-color-swatch {
 .mine .message .reverse {
   display: flex;
   flex-direction: row-reverse;
-  align-items: center;
 }
 
 .mine .message .reverse p {
   display: inline-block;
-}
+} */
 
 /* .mine .message.last:before {
   content: "";

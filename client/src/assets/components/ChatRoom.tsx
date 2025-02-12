@@ -28,6 +28,7 @@ type Message = {
   colorCode: string;
   _id: string;
   updatedAt: string;
+  time: string;
 };
 
 type User = {
@@ -55,17 +56,28 @@ function Intro() {
   const [hide, setHide] = useState("hide");
   // const [loggedIn, setLoggedIn] = useState(true);
   const [isExist, setIsExist] = useState(true);
+  const [socketTime, setSocketTime] = useState(true);
 
   // const [showMotion, setShowMotion] = useState(false);
 
   const [messageStates, setMessageStates] = useState({});
 
-  const formatLocalTime = (isoString: string) => {
-    const date = new Date(isoString);
-    const hours = date.getHours().toString().padStart(2, "0"); // 2자리로 만들기
-    const minutes = date.getMinutes().toString().padStart(2, "0"); // 2자리로 만들기
-    const time = `${hours}:${minutes}`;
-    return time;
+  // const formatLocalTime = (isoString: string) => {
+  //   const date = new Date(isoString);
+  //   const hours = date.getHours().toString().padStart(2, "0"); // 2자리로 만들기
+  //   const minutes = date.getMinutes().toString().padStart(2, "0"); // 2자리로 만들기
+  //   const time = `${hours}:${minutes}`;
+  //   return time;
+  // };
+
+  const getLocalTime = () => {
+    const date = new Date();
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+
+    const localTime = `${hours}:${minutes}`;
+
+    return localTime;
   };
 
   useEffect(() => {
@@ -284,6 +296,7 @@ function Intro() {
       urlencoded.append("userName", userName);
       urlencoded.append("userId", userId);
       urlencoded.append("colorCode", colorCode);
+      urlencoded.append("time", getLocalTime());
     }
 
     const requestOptions = {
@@ -319,6 +332,7 @@ function Intro() {
             emoji: result.newChat.emoji,
             colorCode: result.newChat.colorCode,
             _id: result.newChat._id,
+            time: result.newChat.time,
             roomName,
           };
 
@@ -373,7 +387,7 @@ function Intro() {
     <>
       <div className="chatRoom">
         <div className="title">
-          <div className="titleTop">Emoji Talk</div>
+          <div className="titleTop">Emoji Chat</div>
 
           {/* <div className="onlineNumber"> */}
           <div className="userCount">
@@ -424,14 +438,62 @@ function Intro() {
           }}
         >
           <div className={`infoText ${hide}`}>
-            is a Project investigates beyond our emoji keyboards Today,
-            communication extends beyond spoken and written language to include
-            visual and symbolic tools like emojis, which play an increasingly
-            central role in how we connect and express ourselves. Emojis allow
-            us to send a digital hug, show support, or convey emotions in a way
-            that is immediate and accessible. Their rise highlights the growing
-            need for universal, visual communication in a globally
-            interconnected world.
+            <div
+              style={{
+                marginTop: "2vh",
+              }}
+            >
+              (EN)
+              <p
+                style={{
+                  marginTop: "2vh",
+                  paddingRight: "2vw",
+                  textWrap: "balance",
+                }}
+              >
+                Emoji Chat is a chat platform that uses emojis as its primary
+                language. Users send messages in their own language, and these
+                messages are translated into emojis while considering the
+                cultural context of the language. In this process, the project
+                experiments with the limitations of emoji's cultural inclusivity
+                and explores how emojis are understood and interpreted by
+                different users. As emojis continue to evolve and spread across
+                different generations and cultures, their meanings and
+                applications are constantly shifting. Through this exploration,
+                the project questions the selection process for new emojis—does
+                it truly reflect cultural diversity, or are certain perspectives
+                left out?
+              </p>
+            </div>
+            <div
+              style={{
+                marginTop: "2vh",
+              }}
+            >
+              (DE)
+              <p
+                style={{
+                  marginTop: "2vh",
+                  paddingRight: "2vw",
+                  textWrap: "balance",
+                  marginBottom: "2vh",
+                }}
+              >
+                Emoji Chat ist eine Chat-Plattform, die Emojis als Hauptsprache
+                verwendet. Benutzer senden Nachrichten in ihrer eigenen Sprache,
+                die dann unter Berücksichtigung des kulturellen Kontextes der
+                Sprache in Emojis übersetzt werden. In diesem Prozess
+                experimentiert das Projekt mit den Grenzen der kulturellen
+                Inklusivität von Emojis und untersucht, wie Emojis von
+                verschiedenen Nutzern verstanden und interpretiert werden. Da
+                Emojis weiterhin über verschiedene Generationen und Kulturen
+                hinweg verbreitet werden, verändern sich ihre Bedeutungen und
+                Anwendungen ständig. Durch diese Untersuchung stellt das Projekt
+                die Frage, ob der Auswahlprozess für neue Emojis wirklich
+                kulturelle Vielfalt widerspiegelt oder ob bestimmte Perspektiven
+                ausgeschlossen werden.
+              </p>
+            </div>
           </div>
         </div>
 
@@ -534,12 +596,12 @@ function Intro() {
                           </span>
                           <span
                             style={{
-                              fontSize: "12px",
+                              fontSize: "10px",
                               marginLeft: "2px",
                               color: "#c9c9c9",
                             }}
                           >
-                            {formatLocalTime(item.updatedAt)}
+                            {item.time}
                           </span>
                         </motion.p>
                       )}

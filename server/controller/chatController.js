@@ -15,6 +15,7 @@ const translate = async (req, res) => {
   const userName = req.body.userName;
   const userId = req.body.userId;
   const colorCode = req.body.colorCode;
+  const time = req.body.time;
   // const userPrompt = `Translate the phrase ${text}, just use emojis`;
 
   // const userPrompt = `Translate the phrase into emojis: ${text}, just use emojis`;
@@ -47,6 +48,7 @@ const translate = async (req, res) => {
       message: text,
       emoji: emoji,
       colorCode: colorCode,
+      time: time,
     };
 
     const newChat = new messageModel(newChatMessage);
