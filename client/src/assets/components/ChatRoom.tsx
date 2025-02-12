@@ -167,7 +167,7 @@ function Intro() {
 
       if (response.ok) {
         const result = await response.json();
-        console.log("messages?", result);
+        // console.log("messages?", result);
         setMessages((prevMessages) => {
           return [...prevMessages, ...result.messages];
         });
