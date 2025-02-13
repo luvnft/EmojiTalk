@@ -37,6 +37,14 @@ body {
   overflow: hidden;
 }
 
+.chatTopBox {
+  position: absolute;
+  height: 7vh;
+  width: 96vw;
+  background-color: white;
+  border: 22px solid blue;
+}
+
 .title > div {
   padding: 1vh;
 }
@@ -70,6 +78,14 @@ body {
   100% {
     transform: translateX(-100%); /* 왼쪽으로 이동 */
   }
+}
+
+.desktop {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .translate {
@@ -550,7 +566,7 @@ input[type="color"]::-webkit-color-swatch {
   flex-direction: column;
   font-size: 13px;
   background-color: #f1f1f1;
-  overflow: scroll;
+  overflow-y: scroll;
   overflow-x: hidden;
 }
 
@@ -728,6 +744,10 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 @media (max-width: 576px) {
+  .desktop {
+    display: none;
+  }
+
   .title {
     font-size: 32px;
   }

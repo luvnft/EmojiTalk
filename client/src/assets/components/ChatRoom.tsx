@@ -56,7 +56,7 @@ function Intro() {
   const [hide, setHide] = useState("hide");
   // const [loggedIn, setLoggedIn] = useState(true);
   const [isExist, setIsExist] = useState(true);
-  const [socketTime, setSocketTime] = useState(true);
+  // const [socketTime, setSocketTime] = useState(true);
 
   // const [showMotion, setShowMotion] = useState(false);
 
@@ -385,7 +385,9 @@ function Intro() {
 
   return (
     <>
+      <div className="desktop">Please join with a phone</div>
       <div className="chatRoom">
+        <div className="chatTopBox"></div>
         <div className="title">
           <div className="titleTop">Emoji Chat</div>
 
@@ -399,22 +401,10 @@ function Intro() {
 
             <div className="onlineBox">Online</div>
           </div>
-
-          {/* </div> */}
-
-          {/* <div className="translate">Hi!{localStorage.getItem("userName")}</div> */}
         </div>
-
-        {/* <div className="marquee">
-          {" "}
-          <span>Please enter the text you would like to chat in Emoji</span>
-          <span>Please enter the text you would like to chat in Emoji</span>
-        </div> */}
 
         <div className="leftArrow">
           <div className="arrow"></div>
-          {/* <div className="arrow"></div>
-          <div className="arrow"></div> */}
         </div>
 
         <div
