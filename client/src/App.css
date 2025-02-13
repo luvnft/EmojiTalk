@@ -342,7 +342,7 @@ input[type="color"]::-webkit-color-swatch {
   width: 100%;
   border: none;
   font-size: 1rem;
-  background-color: #eee;
+  background-color: #f9f9f9;
 }
 
 .sendBtn {

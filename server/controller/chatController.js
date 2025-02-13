@@ -22,7 +22,9 @@ const translate = async (req, res) => {
   // const userPrompt = `Translate the following phrase into emojis only. Consider the cultural context of the language and make sure the translation is as understandable as possible using emojis. Do not use any text, only emojis. Here is the phrase: "${text}"`;
 
   // const userPrompt = `Translate the following phrase into emojis only. Ensure the translation reflects the cultural and regional context of the language, incorporating elements unique to the culture where the phrase originates. Make the translation as understandable as possible while using emojis. Do not include any text. Here is the phrase: "${text}"`;
-  const userPrompt = ` Translate the following phrase into emojis only. The emojis should clearly represent the meaning of the phrase as closely as possible, including any implied context. For example, if the phrase is asking if something is working or functioning, use emojis that represent functionality or operation. Do not include any text. Phrase: "${text}”`;
+  const userPrompt = `Translate the following phrase into emojis only. The emojis should clearly represent the meaning of the phrase as closely as possible, including any implied context, considering the cultural context of the language but not directly using country flags just because of the cultural context. Use the flag only when a country is specifically mentioned. If the phrase is already represented by emojis, return the emojis as they are without change. If there is no input, respond with relevant emojis based on context.
+  Phrase: "${text} `;
+
   try {
     // const userPrompt = `Translate the following phrase into emojis only. Make sure the translation captures the exact meaning of the original phrase as closely as possible. At the same time, reflect the cultural and regional context of the language by incorporating culturally unique elements where appropriate. The result should only use emojis and be easy to understand. Here is the phrase: "${text}”`;
     const response = await openai.chat.completions.create({
